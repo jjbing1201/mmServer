@@ -1,4 +1,5 @@
 #include "AlgorithmHash.h"
+#include "../shared/util.h"
 
 BaseDataCycle::BaseDataCycle() 
 {
@@ -16,7 +17,8 @@ void BaseDataCycle::setAllNode()
     int i;
     if (conhash) {
         for (i=0; i<256; i++) {
-	     std::string nodeName = "baseData_"+i;
+	     std::string nodeName = anytostr(i);
+	     std::cout << "nodeName => " << nodeName << std::endl;
 	     conhash_set_node(&global_nodes[i], nodeName.c_str(), 50);
 	     conhash_add_node(conhash, &global_nodes[i]);
         }
