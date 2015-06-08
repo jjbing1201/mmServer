@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/opt/server/framework/AlgorithmHash.cpp
+AlgorithmHash.h
+/opt/server/framework/AlgorithmHash.h
+
+/opt/server/framework/AlgorithmHash.h
+iostream
+-
+map
+-
+SingleTon.h
+/opt/server/framework/SingleTon.h
+header/conhash.h
+/opt/server/framework/header/conhash.h
+
+/opt/server/framework/SingleTon.h
+iostream
+-
+string.h
+-
+stdlib.h
+-
+
+/opt/server/framework/header/configure.h
+
+/opt/server/framework/header/conhash.h
+configure.h
+/opt/server/framework/header/configure.h
+stdlib.h
+-
+
