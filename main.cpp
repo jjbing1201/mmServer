@@ -48,12 +48,15 @@ int main(int argc, char *argv[])
     
     std::string connect = reader.Get("DATABASE","1.master","None");
     std::string connectmsg = reader.Get("DATABASE","2.master","None");
+    std::string connectholter = reader.Get("DATABASE","3.master","None");
 
     std::map<std::string, std::string> connectdetail = datacon::GetInstance().dbconnectInfo(connect);
     std::map<std::string, std::string> connectdetailmsg = messagecon::GetInstance().dbconnectInfo(connectmsg);
+    std::map<std::string, std::string> connectdetailholter = holtercon::GetInstance().dbconnectInfo(connectholter);
 
     datacon::GetInstance().create_connect(connectdetail["ipaddress"], atoi(connectdetail["port"].c_str()), connectdetail["username"], connectdetail["password"], connectdetail["dbname"]);
     messagecon::GetInstance().create_connect(connectdetailmsg["ipaddress"], atoi(connectdetailmsg["port"].c_str()), connectdetailmsg["username"], connectdetailmsg["password"], connectdetailmsg["dbname"]);
+    holtercon::GetInstance().create_connect(connectdetailholter["ipaddress"], atoi(connectdetailholter["port"].c_str()), connectdetailholter["username"],connectdetailholter["password"], connectdetailholter["dbname"]);
 
     /* create socket. */
     newsocket::GetInstance().Create(SOCK_STREAM, AF_INET, 0);
@@ -86,6 +89,9 @@ int main(int argc, char *argv[])
 
 	if ((messagecon::GetInstance().test_connect()) < 0)
 	    messagecon::GetInstance().create_connect(connectdetailmsg["ipaddress"], atoi(connectdetailmsg["port"].c_str()), connectdetailmsg["username"], connectdetailmsg["password"], connectdetailmsg["dbname"]);
+
+        if ((holtercon::GetInstance().test_connect()) < 0)
+	    holtercon::GetInstance().create_connect(connectdetailholter["ipaddress"], atoi(connectdetailholter["port"].c_str()), connectdetailholter["username"],connectdetailholter["password"], connectdetailholter["dbname"]);
 
         for (int i=0; i < waits; ++i)
         {

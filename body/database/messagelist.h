@@ -16,14 +16,15 @@ private:
     std::string column_seven;       // createTime
     std::string column_eight;       // nowStatus
     std::string column_nine;        // hashId
+    std::string column_ten;         // mTitle 
 
 public:
     MM_MESSAGELIST();
     virtual ~MM_MESSAGELIST() {}
 
-    std::map<std::string, std::string> insert_MESSAGELIST(std::string libraryId, std::string ruleId, std::string mContext, std::string userId, std::string userName, std::string createTime, std::string nowStatus, std::string hashId="None");
+    std::map<std::string, std::string> insert_MESSAGELIST(std::string libraryId, std::string ruleId, std::string mContext, std::string userId, std::string userName, std::string createTime, std::string nowStatus, std::string hashId="None", std::string mTitle="Tips");
 
-    std::map<std::string, std::string> update_MESSAGELIST(const std::string &mid, std::string libraryId, std::string ruleId, std::string mContext, std::string userId, std::string userName, std::string createTime, std::string nowStatus, std::string hashId="None");
+    std::map<std::string, std::string> update_MESSAGELIST(const std::string &mid, std::string libraryId, std::string ruleId, std::string mContext, std::string userId, std::string userName, std::string createTime, std::string nowStatus, std::string hashId="None", std::string mTitle="Tips");
 
     std::map<std::string, std::string> update_direct_MESSAGELIST(const std::string &mid, std::string which_column, std::string column_context);
 

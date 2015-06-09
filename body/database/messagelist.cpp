@@ -12,9 +12,10 @@ MM_MESSAGELIST::MM_MESSAGELIST()
      column_seven = "createTime";
      column_eight = "nowStatus";
      column_nine = "hashId";
+     column_ten = "mTitle";
 }
 
-std::map<std::string, std::string> MM_MESSAGELIST::insert_MESSAGELIST(std::string libraryId, std::string ruleId, std::string mContext, std::string userId, std::string userName, std::string createTime, std::string nowStatus, std::string hashId)
+std::map<std::string, std::string> MM_MESSAGELIST::insert_MESSAGELIST(std::string libraryId, std::string ruleId, std::string mContext, std::string userId, std::string userName, std::string createTime, std::string nowStatus, std::string hashId, std::string mTitle)
 {
     /* 1. using bottom to get insert cmd. */
     std::map<std::string, std::string> result;
@@ -34,6 +35,7 @@ std::map<std::string, std::string> MM_MESSAGELIST::insert_MESSAGELIST(std::strin
     tmp.push_back(createTime);
     tmp.push_back(nowStatus);
     tmp.push_back(hashId);
+    tmp.push_back(mTitle);
 
     cmd = bottom.insert_Bottom(tablename, tmp.size(), tmp);
 
@@ -60,7 +62,7 @@ std::map<std::string, std::string> MM_MESSAGELIST::insert_MESSAGELIST(std::strin
     return result;
 }
 
-std::map<std::string, std::string> MM_MESSAGELIST::update_MESSAGELIST(const std::string &mid, std::string libraryId, std::string ruleId, std::string mContext, std::string userId, std::string userName, std::string createTime, std::string nowStatus, std::string hashId)
+std::map<std::string, std::string> MM_MESSAGELIST::update_MESSAGELIST(const std::string &mid, std::string libraryId, std::string ruleId, std::string mContext, std::string userId, std::string userName, std::string createTime, std::string nowStatus, std::string hashId, std::string mTitle)
 {
     /* 1. statement return result. */
     std::map<std::string, std::string> result;
@@ -80,6 +82,7 @@ std::map<std::string, std::string> MM_MESSAGELIST::update_MESSAGELIST(const std:
     changevar[column_seven] = createTime;
     changevar[column_eight] = nowStatus;
     changevar[column_nine] = hashId;
+    changevar[column_ten] = mTitle;
     
     std::map<std::string, std::string> cmdvar;
     cmdvar[column_one] = mid;
@@ -135,6 +138,8 @@ std::map<std::string, std::string> MM_MESSAGELIST::update_direct_MESSAGELIST(con
         get_judge_column = column_eight;
     else if (which_column == "8")
         get_judge_column = column_nine;
+    else if (which_column == "9")
+        get_judge_column = column_ten;
      
     cmd[0] = "success";
     cmd[1] = "update "+tablename+" set "+get_judge_column+" = "+

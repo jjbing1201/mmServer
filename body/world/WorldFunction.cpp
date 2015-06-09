@@ -221,6 +221,7 @@ std::map<std::string, std::string> WORLDFUNCTION::get_map_of_table_column(std::m
         result["createTime"] = tmp_inform[6];
         result["nowStatus"] = tmp_inform[7];
         result["hashId"] = tmp_inform[8];
+        result["mTitle"] = tmp_inform[9];
     } 
     return result;
 }
@@ -267,6 +268,7 @@ std::map<std::string, std::string> WORLDFUNCTION::get_eachmap_of_table(std::stri
         result["createTime"] = tmp_inform[6];
         result["nowStatus"] = tmp_inform[7];
         result["hashId"] = tmp_inform[8];
+        result["mTitle"] = tmp_inform[9];
     }
     return result;
 }

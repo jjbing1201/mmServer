@@ -217,13 +217,17 @@ c_str(), "0.0.000000");
 	uint32 nowtime = nowtimestamp();
         std::string now_time = anytostr(nowtime);
 
+        std::string baseTablename = "baseData_";
+
  	// userName + deviceName + devicePart + serverTime +nowTemp
  	std::string keydata = data["userName"]+data["deviceName"]+data["devicePart"]+now_time+data["nowTemp"];
 	std::map<std::string, std::string> getNodeInfo = bdhash::GetInstance().nodeGet(keydata);
 	if (getNodeInfo["nodeId"] == "0") {
 	    goto world_operation_error;
 	} else {
-	    std::cout << "nodeId => " << getNodeInfo["nodeId"] << std::endl;
+	    baseTablename += getNodeInfo["nodeId"]; 
+	    basedata.insert_BASEDATA(baseTablename, data["nowTemp"], "hashId", data["deviceName"], data["devicePart"], data["serviceUUID"], data["lastTemp"], data["userName"], data["userID"], data["clientTime"], now_time, data["clientVersion"], "0", "1000000000");
+
 	    goto world_operation_normal;
         }
     }
