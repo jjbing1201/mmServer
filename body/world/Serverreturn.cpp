@@ -98,6 +98,24 @@ std::map<std::string, std::string> WORLDRETURN::serverreturn_inherit(\
         }
     }
 
+    else if (interface == "UserHelpList") {
+        WORLDFUNCTION worldfunc;
+        SERVERETURN_DEPEND depend;
+	MM_HELPMAIN helpmain;
+
+        std::vector< std::map<std::string, std::string> > helpPage = depend.get_helplist_post();
+        if (helpPage.size() <= 0)
+            goto world_serverreturn_error;
+        else
+        {
+            unsigned int i;
+            for(i=0; i<helpPage.size(); i++)
+               result[anytostr(i)] = worldfunc.map_to_json(helpPage[i]);
+
+            goto world_serverreturn_normal;
+        }	
+    }
+
 world_serverreturn_error:
     result["Status"]="false";
     result["Info"]="408";

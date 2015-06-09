@@ -40,3 +40,27 @@ std::vector< std::map<std::string, std::string> > SERVERETURN_DEPEND::get_messag
 	return result;
     }
 }
+
+std::vector< std::map<std::string, std::string> > SERVERETURN_DEPEND::get_helplist_post()
+{
+    WORLDFUNCTION worldfunc;
+    MM_HELPMAIN helpmain;
+
+    int i;
+    std::vector< std::map<std::string, std::string> > result;
+
+    std::map<std::string, std::string> helpPage = helpmain.select_all_table();
+    if (helpPage["Status"] != "success") {
+	return result;
+    } else {
+	/* analyst each thread. */
+        std::vector<std::string> each_line = split(helpPage["body"], "\r\n");
+        for(i=1; i<each_line.size(); i++)
+        {
+            std::map<std::string, std::string> get_each_help = worldfunc.get_eachmap_of_table(each_line[i], "HelpMain");
+            result.push_back(get_each_help);
+        }
+
+        return result;
+    }
+}

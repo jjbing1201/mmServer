@@ -24,6 +24,7 @@ std::map<std::string, std::string> WORLD_MAIN::into_process(\
     if (method["Method"] == "ServerConnect" ||
 	method["Method"] == "UserMessageNotification" ||
 	method["Method"] == "UserMessageList" ||
+	method["Method"] == "UserHelpList" ||
 	method["Method"] == "UserLoginBaseData")
         change_process(true, false, true, true);
 

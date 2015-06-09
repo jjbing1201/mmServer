@@ -6,6 +6,7 @@
 #include "../database/messagelist.h"
 #include "../database/basedata.h"
 #include "../database/interfaceusing.h"
+#include "../database/helpmain.h"
 
 #endif /* _WORLD_TABLE_INCLUDE_ */
 

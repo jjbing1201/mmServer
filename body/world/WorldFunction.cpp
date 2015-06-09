@@ -222,6 +222,12 @@ std::map<std::string, std::string> WORLDFUNCTION::get_map_of_table_column(std::m
         result["nowStatus"] = tmp_inform[7];
         result["hashId"] = tmp_inform[8];
         result["mTitle"] = tmp_inform[9];
+    } else if (tablename == "HelpMain") {
+        result["helpId"] = tmp_inform[0];
+        result["helpTitle"] = tmp_inform[1];
+        result["helpContext"] = tmp_inform[2];
+        result["helpTimestamp"] = tmp_inform[3];
+        result["helpDelete"] = tmp_inform[4];
     } 
     return result;
 }
@@ -269,6 +275,12 @@ std::map<std::string, std::string> WORLDFUNCTION::get_eachmap_of_table(std::stri
         result["nowStatus"] = tmp_inform[7];
         result["hashId"] = tmp_inform[8];
         result["mTitle"] = tmp_inform[9];
+    } else if (tablename == "HelpMain") {
+        result["helpId"] = tmp_inform[0];
+        result["helpTitle"] = tmp_inform[1];
+        result["helpContext"] = tmp_inform[2];
+        result["helpTimestamp"] = tmp_inform[3];
+        result["helpDelete"] = tmp_inform[4];
     }
     return result;
 }

@@ -8,6 +8,7 @@ set(sources
     interfaceusing.cpp
     verifycode.cpp
     messagelist.cpp
+    helpmain.cpp
 )
 
 set(headers
@@ -19,6 +20,7 @@ set(headers
     interfaceusing.h
     verifycode.h
     messagelist.h
+    helpmain.h
 )
 
 include_directories(

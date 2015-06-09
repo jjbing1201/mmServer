@@ -86,6 +86,7 @@ std::map<std::string, std::string> WORLDFORMAT::format_inter_inherit(\
 	interface == "UserMessageNotification" || 
 	interface == "UserMessageList" || 
 	interface == "UserDataNotification" || 
+	interface == "UserHelpList" || 
 	interface == "UserLoginBaseData")
         result = normal_format_inside(interface, data);
     
