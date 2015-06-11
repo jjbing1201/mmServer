@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC -g   -shared -Wl,-soname,libbody.so -o libbody.so CMakeFiles/body.dir/Logic.cpp.o world/libworld.so base/libbase.so database/libdatabase.so -Wl,-rpath,/opt/server/build/body/world:/opt/server/build/body/base:/opt/server/build/body/database 

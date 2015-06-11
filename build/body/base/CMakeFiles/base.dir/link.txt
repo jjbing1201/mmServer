@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC -g   -shared -Wl,-soname,libbase.so -o libbase.so CMakeFiles/base.dir/check.cpp.o CMakeFiles/base.dir/format.cpp.o 

@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC -g   -shared -Wl,-soname,libdatabase.so -o libdatabase.so CMakeFiles/database.dir/base.cpp.o CMakeFiles/database.dir/basedata.cpp.o CMakeFiles/database.dir/bottom.cpp.o CMakeFiles/database.dir/users.cpp.o CMakeFiles/database.dir/interfaceusing.cpp.o CMakeFiles/database.dir/verifycode.cpp.o CMakeFiles/database.dir/messagelist.cpp.o 

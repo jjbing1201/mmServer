@@ -193,6 +193,7 @@ std::string HttpAction::logicPart(bool whiteAuth)
     std::string body;
     std::string message;
     /* call logic part. */
+    BASICALG basicalgorithm;
     ErrorBase errorbase;
     LOGIC logic(whiteAuth);
     
@@ -215,6 +216,7 @@ std::string HttpAction::logicPart(bool whiteAuth)
 
         /* GET Part */
         if (dataput == 1){
+#if 0
             bool checkget = logic.getMethodcheck(_urlmethod, _inputlength);         
             if (checkget == true)
             {
@@ -241,6 +243,51 @@ std::string HttpAction::logicPart(bool whiteAuth)
                 body = errorbase.format_globalerror(header["incode"], header["description"]); 
                 message = logic.bodyPart("404", header["header"], body);
             }
+#endif
+	
+       std::map<std::string, std::string> accessMethod = logic.getAccessMethod(_urlmethod.substr(1));
+       if (accessMethod["Status"] == "true")
+       {
+            if (accessMethod["Method"] == "407" or \
+                    accessMethod["Method"] == "410")
+            {
+                /* method not found. will return 407 & 410 */
+                header = logic.headerPart(accessMethod["Method"]);
+                body = errorbase.format_globalerror(header["incode"], header["description"]);
+                message = logic.bodyPart(accessMethod["Method"], header["header"], body);
+            }
+            else
+            {
+                /* --- Part 2. check user input data. ---*/
+                // a. decode base64
+                //std::string decodedata = logic.getPostVerifty(_inputdata);
+                std::string decodedata = basicalgorithm.UrlDecode(_inputdata);
+                // b. check md5sum
+                std::map<std::string, std::string> getData = logic.getCorrectData(_urlmethod.substr(1), decodedata);
+                if (getData["Status"] == "200")
+                {
+                    /***
+                        check data and get all logic return here.
+                    ***/
+                    getData.erase("Status");
+                    std::map<std::string, std::string> getdoing = logic.DoingInputVariable(accessMethod, getData);
+                    header = logic.headerPart(getdoing["Info"]);
+                    message = logic.bodyPart(getdoing["Info"], header["header"], getdoing["body"]);
+
+		     }else{
+                    //{"code":0,"dataObject":null,"incode":"200","strInfo":"None"}
+                    header = logic.headerPart(getData["Status"]);
+                    body = errorbase.format_globalerror(header["incode"], header["description"]);
+                    message = logic.bodyPart(getData["Status"], header["header"], body);
+                }
+            }
+
+       /* method not allowed. will return 406. */
+       }else{
+           header = logic.headerPart(accessMethod["Method"]);
+           body = errorbase.format_globalerror(header["incode"], header["description"]);
+           message = logic.bodyPart(accessMethod["Method"], header["header"], body);
+       }
 
         /* POST Part*/
         }else if (dataput == 2){
@@ -250,8 +297,6 @@ std::string HttpAction::logicPart(bool whiteAuth)
                  : 402 : auth failed.
                  : 405 : sql injection match
                  : 200 : ok. */
-
-           BASICALG basicalgorithm;
 
            /* --- Part 1. check user method exit and allow 
             * on error will return 406, 407 here.

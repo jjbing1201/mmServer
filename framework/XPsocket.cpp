@@ -257,7 +257,7 @@ std::string XPSOCKET::ReadData(int remotefd)
         }
     }
 
-    printf("buf => %s\n", buf);
+    //printf("buf => %s\n", buf);
 
     /* telnet error. */
     if (strlen(buf) < 6 or buf == ""){

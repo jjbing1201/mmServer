@@ -1,5 +1,0 @@
-/opt/server/build/CMakeFiles/Server_Lisi_01.dir
-/opt/server/build/body/base/CMakeFiles/base.dir
-/opt/server/build/body/CMakeFiles/body.dir
-/opt/server/build/body/database/CMakeFiles/database.dir
-/opt/server/build/body/world/CMakeFiles/world.dir
