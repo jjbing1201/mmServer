@@ -54,9 +54,12 @@ c_str(), "0.0.000000");
 
 	std::map<std::string, std::string> check_user_exist = users.select_by_login(data["username"], data["password"]);
 	if (check_user_exist["Status"] != "success")
-            goto world_operation_error;
-	
-	goto world_operation_normal;
+	{
+	    result["statusCode"] = "-6";	
+	    goto world_operation_normal_nocover;
+	} else {
+	    goto world_operation_normal;
+	}
     }
 
     else if (interface == "UserVerifyCode")
@@ -79,7 +82,8 @@ c_str(), "0.0.000000");
 	if (get_ensure_telephone["Status"] != "success") {
 	    std::map<std::string, std::string> new_verifycode = verifycode.insert_VERIFYCODE(data["verifyType"], data["cellphone"], string_code, now_time);
   	    if (new_verifycode["Status"] != "success") {
-		goto world_operation_error;
+		result["statusCode"] = "-7";
+		goto world_operation_normal_nocover;
 	    } else {
 		sms.push_notification_of_sms((char*)data["cellphone"].c_str(), (char*)send_data.c_str()); 
 		goto world_operation_normal;
@@ -88,7 +92,8 @@ c_str(), "0.0.000000");
 	    std::string verify_id = worldfunc.get_autoincrement_line(get_ensure_telephone);
 	    std::map<std::string, std::string> update_verifycode = verifycode.update_VERIFYCODE(verify_id, data["verifyType"], data["cellphone"], string_code, now_time);
 	    if (update_verifycode["Status"] != "success") {
-                goto world_operation_error;
+		result["statusCode"] = "-8";
+                goto world_operation_normal_nocover;
             } else {
 		sms.push_notification_of_sms((char*)data["cellphone"].c_str(), (char*)send_data.c_str());
                 goto world_operation_normal;
@@ -114,30 +119,42 @@ c_str(), "0.0.000000");
    	    std::map<std::string, std::string> token_pass = verifycode.select_by_send(data["registerresource"], data["cellphone"]);
 	    if (token_pass["Status"] != "success") {
 		result["body"] = "register token not found, please reapply for.";
+		result["statusCode"] = "-1";
 		goto world_operation_normal_nocover;	
 	    } else {
 		/* 3.2. input token error. */
 		std::map<std::string, std::string> check_token = worldfunc.get_map_of_table_column(token_pass, "VerifyCode", "\r\n");
 		if (check_token["verifyNumber"] != data["verifycode"]) {
 		    result["body"] = "token input error, please check.";
+		    result["statusCode"] = "-2";
 		    goto world_operation_normal_nocover;
 		} 
 		    
 		/* 3.3 token delay */
 		if (nowtime > atoi(check_token["verifyCreateTime"].c_str()) + atoi(check_token["verifyDelay"].c_str())) {
 		    result["body"] = "token delay, please reapply.";
+		    result["statusCode"] = "-3";
 		    goto world_operation_normal_nocover;	
 		}    		
 	    }
 
+#if 0
+            std::map<std::string, std::string> select_user_exist = users.select_user_exist(data["cellphone"]);
+	    if (select_user_exist["Status"] != "success") {
+		result["statusCode"] = "-5";
+		goto world_operation_normal_nocover;
+	    }
+#endif
 	    std::map<std::string, std::string> insert_new_users = users.insert_USERS(data["cellphone"],  data["password"], "None", "1", "0", "None", "None", "None", "0", now_time);
 	    if (insert_new_users["Status"] != "success") {
-		return insert_new_users;
+		result["statusCode"] = "-4";
+		goto world_operation_normal_nocover;
 	    } else {
 		goto world_operation_normal;
 	    }
 	} else {
 	    result["body"] = "user already exist.";
+	    result["statusCode"] = "-5";
 	    goto world_operation_normal_nocover;
 	}
     }
@@ -155,7 +172,8 @@ c_str(), "0.0.000000");
 	/* 2. get user id */
  	std::map<std::string, std::string> select_exist_user = users.select_by_username(data["cellphone"]);
 	if (select_exist_user["Status"] != "success") {
-	    return select_exist_user;
+	    result["statusCode"] = "-5";
+	    goto world_operation_normal_nocover;
 	} else {
 	    std::map<std::string, std::string> user_detail = worldfunc.get_map_of_table_column(select_exist_user, "Person", "\r\n");
 	    
@@ -181,24 +199,32 @@ c_str(), "0.0.000000");
             return select_exist_user;
         } else {
 	    /* 3.1 check token pass. */
-            std::map<std::string, std::string> token_pass = verifycode.select_by_send("3", data["cellphone"]);
-            if (token_pass["Status"] != "success") {
-                result["body"] = "register token not found, please reapply for.";
-                goto world_operation_normal_nocover;
-            } else {
-                /* 3.2. input token error. */
-                std::map<std::string, std::string> check_token = worldfunc.get_map_of_table_column(token_pass, "VerifyCode", "\r\n");
-                if (check_token["verifyNumber"] != data["verifycode"]) {
-                    result["body"] = "token input error, please check.";
-                    goto world_operation_normal_nocover;
-                }
+	    if (data["verifycode"] == "None")
+	    {
 
-                /* 3.3 token delay */
-                if (nowtime > atoi(check_token["verifyCreateTime"].c_str()) + atoi(check_token["verifyDelay"].c_str())) {
-                    result["body"] = "token delay, please reapply.";
+	    } else {
+                std::map<std::string, std::string> token_pass = verifycode.select_by_send("3", data["cellphone"]);
+                if (token_pass["Status"] != "success") {
+                    result["body"] = "register token not found, please reapply for.";
+    		result["statusCode"] = "-1";
                     goto world_operation_normal_nocover;
+                } else {
+                    /* 3.2. input token error. */
+                    std::map<std::string, std::string> check_token = worldfunc.get_map_of_table_column(token_pass, "VerifyCode", "\r\n");
+                    if (check_token["verifyNumber"] != data["verifycode"]) {
+                        result["body"] = "token input error, please check.";
+    		    result["statusCode"] = "-2";
+                        goto world_operation_normal_nocover;
+                    }
+    
+                    /* 3.3 token delay */
+                    if (nowtime > atoi(check_token["verifyCreateTime"].c_str()) + atoi(check_token["verifyDelay"].c_str())) {
+                        result["body"] = "token delay, please reapply.";
+    		    result["statusCode"] = "-3";
+                        goto world_operation_normal_nocover;
+                    }
                 }
-            }	    
+	    }	    
 
 	    /* 4.1 do Operation Reset */
 	    std::map<std::string, std::string> user_detail = worldfunc.get_map_of_table_column(select_exist_user, "Person", "\r\n");
@@ -232,16 +258,33 @@ c_str(), "0.0.000000");
         }
     }
 
+    else if (interface == "UserMessageEachCheck") 
+    {
+	WORLDFUNCTION worldfunc;
+        OPERATION_DEPEND depend;
+	MM_MESSAGELIST messagelist;
+
+	std::map<std::string, std::string> updateDirect = messagelist.update_direct_MESSAGELIST(data["mid"], "7", "1");
+	if (updateDirect["Status"] != "success") {
+	    result["statusCode"] = "-9";
+	    goto world_operation_normal_nocover;
+        } else {
+	    goto world_operation_normal;
+	}
+    }
+
 world_operation_error:
     result["Status"]="false";
     result["Info"]="408";
     result["body"]="Operation return error.";
+    result["statusCode"] = "-1";
     return result;
 
 world_operation_normal:
     result["Status"]="success";
     result["Info"]="200";
     result["body"]="success";
+    result["statusCode"] = "0";
     return result;
 
 world_operation_normal_nocover:

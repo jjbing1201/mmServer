@@ -25,6 +25,7 @@ std::map<std::string, std::string> WORLD_MAIN::into_process(\
 	method["Method"] == "UserMessageNotification" ||
 	method["Method"] == "UserMessageList" ||
 	method["Method"] == "UserHelpList" ||
+	method["Method"] == "UserCheckVerifyCode" ||
 	method["Method"] == "UserLoginBaseData")
         change_process(true, false, true, true);
 
@@ -33,6 +34,7 @@ std::map<std::string, std::string> WORLD_MAIN::into_process(\
 	     method["Method"] == "UserRegister" ||
 	     method["Method"] == "UserResetPass" ||
 	     method["Method"] == "UserPrivateFillin" ||
+	     method["Method"] == "UserMessageEachCheck" ||
 	     method["Method"] == "UserDataNotification")
 	change_process(true, true, false, true);
 

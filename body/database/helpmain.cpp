@@ -180,3 +180,42 @@ std::map<std::string, std::string> MM_HELPMAIN::select_all_table(void)
 
     return result;
 }
+
+std::map<std::string, std::string> MM_HELPMAIN::select_by_helpList(std::string start_lo, std::string end_lo)
+{
+    /* 1. statement return result. */
+    std::map<std::string, std::string> result;
+
+    /* 2. statement bottom using. */
+    BASE base;
+    DAL_Bottom bottom;
+
+    /* 3. combine cmd. */
+    std::map<int, std::string> cmd;
+    std::map<std::string, std::string> cmdvar;
+    cmd[0] = "success";
+    cmd[1] = "select * from "+tablename+" order by "+column_four+" desc limit "+start_lo+","+end_lo+";";
+
+    /* 4. get return. */
+    if (cmd[0] == "false")
+    {
+        result["Status"] = "failed";
+        result["Info"] = "409";
+        result["body"] = "<<< cmd >>> combine Error -> MIWA_BBS_THREAD SELECT Single by id";
+    }else{
+        std::string getcmddoing = datacon::GetInstance().get_execute_result(cmd[1]);
+        int check_getcmddoing = base.doingjudge(getcmddoing);
+        if (check_getcmddoing == 1)
+        {
+            result["Status"] = "failed";
+            result["Info"] = "408";
+            result["body"] = "<<< cmd >>> doing Error -> USERS SELECT Single by id";
+        }else{
+            result["Status"] = "success";
+            result["Info"] = "200";
+            result["body"] = getcmddoing;
+        }
+    }
+
+    return result;
+}

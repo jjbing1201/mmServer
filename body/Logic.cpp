@@ -227,7 +227,7 @@ std::map<std::string, std::string> LOGIC::getCorrectData(const std::string & url
 
             /* ---------- inside. ------------ */
             // <<<<< For World >>>>> 
-            if(urlmethod == "ServerConnect" || urlmethod == "UserLogin" || urlmethod == "UserLoginBaseData" || urlmethod == "UserVerifyCode" || urlmethod == "UserRegister" || urlmethod == "UserPrivateFillin" || urlmethod == "UserResetPass" || urlmethod == "UserMessageNotification" || urlmethod == "UserMessageList" || urlmethod == "UserDataNotification" || urlmethod == "UserHelpList")
+            if(urlmethod == "ServerConnect" || urlmethod == "UserLogin" || urlmethod == "UserLoginBaseData" || urlmethod == "UserVerifyCode" || urlmethod == "UserRegister" || urlmethod == "UserPrivateFillin" || urlmethod == "UserResetPass" || urlmethod == "UserMessageNotification" || urlmethod == "UserMessageList" || urlmethod == "UserDataNotification" || urlmethod == "UserHelpList" || urlmethod == "UserMessageEachCheck" || urlmethod == "UserCheckVerifyCode")
             {
                 std::string combine =  analystafter["timestamp"]+"+"\
                                         +analystafter["data"]+"+"\

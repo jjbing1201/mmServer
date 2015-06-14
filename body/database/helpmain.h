@@ -28,6 +28,8 @@ public:
      * param: .
     */
     std::map<std::string, std::string> select_all_table();
+   
+    std::map<std::string, std::string> select_by_helpList(std::string start_lo, std::string end_lo);    
 };
 
 #endif /* _DATABASE_HELPMAIN_ */

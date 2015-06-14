@@ -250,6 +250,7 @@ std::map<std::string, std::string> MM_USERS::select_by_username(std::string user
     cmdvar[column_two]=user_name;
     
     cmd = bottom.select_direct_Bottom(tablename, "None", cmdvar);
+    std::cout << "cmd 1 => " << cmd[1] << std::endl;
     
     /* 4. get return. */
     if (cmd[0] == "false")

@@ -17,7 +17,7 @@ public:
 
     std::vector< std::map<std::string, std::string> > get_messagelist_post(std::string userName, std::string start_location, std::string end_location);
 
-    std::vector< std::map<std::string, std::string> > get_helplist_post();
+    std::vector< std::map<std::string, std::string> > get_helplist_post(std::string start_location, std::string end_location);
 };
 
 #endif /* _SERVERRETURN_DEPEND_HEADER_ */

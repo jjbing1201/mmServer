@@ -47,6 +47,7 @@ std::map<std::string, std::string> WORLDFORMAT::normal_format_inside(std::string
             dataObject["details"].append(it->second);
         }
     }
+    root["statusCode"] = data["statusCode"];
     root["dataObject"]=dataObject;
     result["body"] = fast_writer.write(root);
     
@@ -87,6 +88,8 @@ std::map<std::string, std::string> WORLDFORMAT::format_inter_inherit(\
 	interface == "UserMessageList" || 
 	interface == "UserDataNotification" || 
 	interface == "UserHelpList" || 
+	interface == "UserMessageEachCheck" || 
+	interface == "UserCheckVerifyCode" || 
 	interface == "UserLoginBaseData")
         result = normal_format_inside(interface, data);
     

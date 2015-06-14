@@ -41,7 +41,7 @@ std::vector< std::map<std::string, std::string> > SERVERETURN_DEPEND::get_messag
     }
 }
 
-std::vector< std::map<std::string, std::string> > SERVERETURN_DEPEND::get_helplist_post()
+std::vector< std::map<std::string, std::string> > SERVERETURN_DEPEND::get_helplist_post(std::string start_location, std::string end_location)
 {
     WORLDFUNCTION worldfunc;
     MM_HELPMAIN helpmain;
@@ -49,7 +49,7 @@ std::vector< std::map<std::string, std::string> > SERVERETURN_DEPEND::get_helpli
     int i;
     std::vector< std::map<std::string, std::string> > result;
 
-    std::map<std::string, std::string> helpPage = helpmain.select_all_table();
+    std::map<std::string, std::string> helpPage = helpmain.select_by_helpList(start_location, end_location);
     if (helpPage["Status"] != "success") {
 	return result;
     } else {

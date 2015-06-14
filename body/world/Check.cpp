@@ -29,6 +29,8 @@ std::map<std::string, std::string> WORLDCHECK::check_inter(\
 	interface == "UserMessageList" || 
 	interface == "UserDataNotification" || 
 	interface == "UserHelpList" || 
+	interface == "UserMessageEachCheck" || 
+	interface == "UserCheckVerifyCode" || 
 	interface == "UserLoginBaseData")
     {
         std::map<std::string, std::string> general_check = normal_check_outside(data);

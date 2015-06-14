@@ -38,7 +38,9 @@ const _interHandler interfaceName[] =
     {"UserMessageNotification", 1, "1", "1.0.3_0608"},
     {"UserMessageList", 1, "1", "1.0.3_0608"},
     {"UserDataNotification", 1, "1", "1.0.3_0608"},
-    {"UserHelpList", 1, "1", "1.0.3_0608"}
+    {"UserHelpList", 1, "1", "1.0.3_0608"},
+    {"UserMessageEachCheck", 1, "1", "1.0.3_0609"},
+    {"UserCheckVerifyCode", 1, "1", "1.0.3_0613"}
 };
 
 #endif /* _INTERFACE_MASTER_ */

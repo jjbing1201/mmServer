@@ -265,7 +265,7 @@ std::map<std::string, std::string> MM_MESSAGELIST::select_by_messageList(std::st
     std::map<std::string, std::string> cmdvar;
     cmd[0] = "success";
     cmd[1] = "select * from "+tablename+" where "+column_six+" = \""+userName
-            +"\" order by "+column_seven+" desc limit "+start_lo+","+end_lo+";";
+            +"\" and "+column_eight+" = 0 order by "+column_seven+" desc limit "+start_lo+","+end_lo+";";
 
     /* 4. get return. */
     if (cmd[0] == "false")
